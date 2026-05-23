@@ -1,0 +1,399 @@
+ <html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rayatechibazarpeth - E-commerce</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .website-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .search-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar {
+            width: 200px;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-link {
+            margin-right: 20px;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        .cart-link:hover {
+            color: #ff7f50;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        /* Product Carousel */
+        #productCarousel .carousel-inner img {
+            width: 100%;
+            max-height: 600px;
+            text-align: center;
+        }
+
+        /* Form Styles */
+        #farmerForm {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Skip Button Styles */
+        .skip-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .skip-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Data Table Styles */
+        #farmerTable {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        #farmerTable th,
+        #farmerTable td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        #farmerTable th {
+            background-color: #f4f4f4;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+        }
+
+        footer .col-md-3 {
+            margin-bottom: 20px;
+        }
+
+        footer h5 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        footer p,
+        footer ul {
+            font-size: 14px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center">
+           <img th:src="@{/image/R.jpg}" alt="Rayat Image" class="me-3" style="width:40px; height:40px;">
+            <a class="navbar-brand fw-bold" href="#">Rayatechibazarpeth</a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart/fetchcart">View Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Details</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    <div style="float:right">Welcome <span th:text=${user}></span></div>
+  </nav>
+
+  <!-- Product Slider -->
+  <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+           <img th:src="@{/image/farmer.jpg}" class="d-block mx-auto" alt="Product 1">
+        </div>
+        <div class="carousel-item">
+            <img th:src="@{/image/far3.jpg}"  class="d-block mx-auto" alt="Product 2">
+        </div>
+        <div class="carousel-item">
+            <img th:src="@{/image/farmer3.jpg}" class="d-block mx-auto" alt="Product 3">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  
+  
+ <form id="farmerForm" action="/farmers/add" method="post" enctype="multipart/form-data">
+    <!-- Hidden fields for User ID and Email -->
+         <input type="hidden" id="userId" name="userId" th:value="${userId}">
+
+ 
+    <input type="hidden" id="verificationStatus" name="verificationStatus" value="pending">
+
+    <div class="form-group">
+        <label for="farmerName">Farmer Name:</label>
+        <input type="text" id="farmerName" name="farmerName" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="contact">Contact Number:</label>
+        <input type="number" id="contact" name="contact" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="perKgRate">Per Kg Rate:</label>
+        <input type="number" id="perKgRate" name="perKgRate" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="productImage">Product Image:</label>
+        <input type="file" id="productImage" name="productImage" class="form-control" accept="image/*" required>
+    </div>
+
+    <div class="form-group">
+        <label for="idProof">ID Proof:</label>
+        <select id="idProof" name="idProof" class="form-control" required>
+            <option value="Aadhar">Aadhar</option>
+            <option value="PAN">PAN</option>
+            <option value="VoterID">Voter ID</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="idProofNumber">ID Proof Number:</label>
+        <input type="text" id="idProofNumber" name="idProofNumber" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="payment">Payment Amount (Rs.):</label>
+        <input type="number" id="payment" name="payment" class="form-control" value="100" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate" class="form-control" required>
+</div>
+
+<div class="form-group">
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="endDate" class="form-control" required>
+</div>
+
+    <!-- Hidden duration field -->
+    <input type="hidden" id="duration" name="duration">
+
+    <button type="submit" class="btn btn-primary w-100 py-2"  >Submit</button>
+</form>
+
+
+
+  <!-- Skip Button -->
+  <div class="text-center">
+    <button class="skip-button" onclick="window.location.href='another-page.html'">Skip</button>
+  </div>
+
+ 
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h5>About Us</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac efficitur justo.</p>
+            </div>
+            <div class="col-md-3">
+                <h5>Customer Service</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white">Contact Us</a></li>
+                    <li><a href="#" class="text-white">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Follow Us</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white">Facebook</a></li>
+                    <li><a href="#" class="text-white">Twitter</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Subscribe</h5>
+                <form>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Your Email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+
+<script>
+    function calculateDuration() {
+        let start = new Date(document.getElementById("startDate").value);
+        let end = new Date(document.getElementById("endDate").value);
+
+        if (start && end && end >= start) {
+            let duration = Math.ceil((end - start) / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+            document.getElementById("duration").value = duration; // Set the hidden input value
+        }
+    }
+
+    document.getElementById("startDate").addEventListener("change", calculateDuration);
+    document.getElementById("endDate").addEventListener("change", calculateDuration);
+
+    document.getElementById("farmerForm").addEventListener("submit", function(event) {
+        calculateDuration(); // Ensure duration is calculated before submission
+
+        if (!document.getElementById("duration").value) {
+            event.preventDefault(); // Stop form submission if duration is not calculated
+            alert("Please select valid Start and End dates.");
+        }
+    });
+</script>
+
+<script>
+    // Generate barcode based on payment amount
+    JsBarcode("#barcode", "Rs. 100", {
+        format: "CODE128",  
+        lineColor: "#0aa", 
+        width: 2,  
+        height: 50,  
+        displayValue: true,  
+    });
+
+    
+    document.getElementById('userId').value = ''; 
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

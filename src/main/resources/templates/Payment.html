@@ -1,0 +1,164 @@
+
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Container Animation */
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out; /* Fade-in Animation */
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Success Icon Animation */
+        .success-icon {
+            font-size: 50px;
+            color: #28a745; /* Green color */
+            animation: pop 0.6s ease-out; /* Pop Animation */
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Title and Subtitle Animation */
+        .title, .subtitle {
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Title */
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #343a40;
+            margin: 10px 0;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        /* Details Section */
+        .details {
+            text-align: left;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #495057;
+            animation: slideUp 1.2s ease-out; /* Add animation delay */
+        }
+
+        .details p {
+            margin: 5px 0;
+        }
+
+        .details p span {
+            font-weight: bold;
+        }
+
+        /* Action Button */
+        .button {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            animation: slideUp 1.4s ease-out; /* Add animation delay */
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+
+        /* Back to Home Link */
+        .back-link {
+            margin-top: 10px;
+            display: block;
+            font-size: 12px;
+            color: #007bff;
+            text-decoration: none;
+            animation: slideUp 1.6s ease-out; /* Add animation delay */
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Success Icon -->
+        <div class="success-icon">✔</div>
+        
+        <!-- Title and Subtitle -->
+        <div class="title">Payment Successful!</div>
+        <div class="subtitle">Thank you!Farmer details have been added successfully, and the payment has been completed.</div>
+        
+        <!-- Payment Details -->
+        
+        
+        <!-- Action Buttons -->
+        <a href="#" class="button">OK</a>
+        <a href="/users/login" class="back-link">— Back to Home</a>
+    </div>
+</body>
+</html>

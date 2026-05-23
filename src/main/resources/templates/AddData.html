@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Farmer Marketplace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2e7d32;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+        .sidebar .logo {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar nav a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar nav a:hover {
+            background-color: #1b5e20;
+        }
+        .sidebar nav a.active {
+            background-color: #ffeb3b;
+            color: #333;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .dashboard-header h1 {
+            font-size: 24px;
+        }
+        .dashboard-header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .dashboard-header .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .card .card-icon {
+            font-size: 36px;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .chart-container canvas {
+            width: 400px !important;
+            height: 400px !important;
+            max-width: 100%;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .notification-container {
+            margin-top: 30px;
+        }
+        .notification {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .verify-btn {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">🚜 Farmer Marketplace</div>
+            <nav>
+                <a href="#" class="active"><i class="fas fa-chart-line"></i> Dashboard</a>
+                <a href="#"><i class="fas fa-user-plus"></i> Add Farmer</a>
+                <a href="#"><i class="fas fa-seedling"></i> View Farmers</a>
+            </nav>
+        </div>
+        <div class="main-content">
+            <div class="dashboard-header">
+                <h1>Admin Dashboard</h1>
+                <div class="user-info">
+                    <img th:src="@{/images/admin.jpg}" alt="Admin"> Admin Name
+                </div>
+            </div>
+            <div class="notification-container">
+                <h2>New Farmers Awaiting Verification</h2>
+                <div id="notificationList"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="admin-notification">
+    <h3>New Farmer Submissions (Pending Verification)</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Farmer Name</th>
+                <th>Product</th>
+                <th>Contact</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Thymeleaf Loop to Show Unverified Farmers -->
+            <tr th:each="farmer : ${unverifiedFarmers}">
+                <td th:text="${farmer.farmername}"></td>
+                <td th:text="${farmer.productName}"></td>
+                <td th:text="${farmer.contact}"></td>
+                <td th:text="${farmer.location}"></td>
+                <td>
+                    <form th:action="@{/admin/verifyFarmer}" method="post">
+                        <input type="hidden" name="farmerId" th:value="${farmer.id}" />
+                        <button type="submit">Verify</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    
+    <script>
+        let newFarmers = [
+            { id: 1, name: "John Doe", location: "Maharashtra" },
+            { id: 2, name: "Jane Smith", location: "Karnataka" }
+        ];
+        
+        function renderNotifications() {
+            let notificationList = document.getElementById("notificationList");
+            notificationList.innerHTML = "";
+            newFarmers.forEach(farmer => {
+                let div = document.createElement("div");
+                div.classList.add("notification");
+                div.innerHTML = `
+                    <span>${farmer.name} - ${farmer.location}</span>
+                    <button class="verify-btn" onclick="verifyFarmer(${farmer.id})">Verify</button>
+                `;
+                notificationList.appendChild(div);
+            });
+        }
+        
+        function verifyFarmer(id) {
+            newFarmers = newFarmers.filter(farmer => farmer.id !== id);
+            renderNotifications();
+            alert("Farmer Verified and Added to Database");
+        }
+        
+        renderNotifications();
+    </script>
+</body>
+</html>

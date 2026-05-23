@@ -1,0 +1,125 @@
+<html en"lang" xmlns:th="http://www.thymeleaf.org"  >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://wallpaperaccess.com/full/659794.jpg'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Ensures the background image doesn't scroll */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .registration-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .registration-form h2 {
+            margin-bottom: 20px;
+        }
+
+        img.logo {
+            width: 100px; /* Set logo width */
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .login-link {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+    
+    <form action="../users/registeruser" method="POST">
+      
+        <img src="https://png.pngtree.com/png-clipart/20230710/original/pngtree-shetkari-raja-png-image_9290533.png" alt="Logo" class="logo"> <!-- Path to your logo -->
+
+        
+            <h2>Create an Account</h2>
+ 
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+           <div class="form-group">
+    <label for="phoneno">Phone Number</label>
+    <input type="tel" id="phoneno" name="phoneno" placeholder="Enter your phone number" pattern="[0-9]{10}" required>
+</div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="user_type">User Type</label>
+                <select id="user_type" name="user_type" required>
+                    <option value="">Select user type</option>
+                    <option value="Farmer">Farmer</option>
+                    <option value="MarketSeller">MarketSeller</option>
+                </select>            
+            <button type="submit">Register</button>
+</div>
+            <p class="login-link">Already have an account? <a href="#">Login here</a></p>
+        </form>
+    </div>
+</body>
+</html>
